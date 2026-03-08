@@ -9,12 +9,12 @@ namespace UnitTest
         /// <summary>
         /// Змінна для зберігання екземпляра RefactorController, який буде використовуватися у всіх тестах для виклику методу RemoveParameter.
         /// </summary>
-        private RefactorController refactorController;
+        private RefactorController_RemoveParameter refactorController;
 
         [TestInitialize]
         public void Setup()
         {
-            refactorController = new RefactorController();
+            refactorController = new RefactorController_RemoveParameter();
         }
 
         /// <summary>
