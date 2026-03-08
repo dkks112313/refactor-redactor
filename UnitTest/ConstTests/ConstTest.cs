@@ -20,7 +20,7 @@ namespace UnitTest.ConstTests
         public void TestReplacementASingleMagicNumber()
         {
             string input = "int x = 10;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "10");
             Assert.AreEqual("const int MAGIC_NUMBER = 10;\nint x = MAGIC_NUMBER;", result);
         }
 
@@ -31,7 +31,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceAMagicNumberInExpression()
         {
             string input = "int y = a + 5;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "5");
             Assert.AreEqual("const int MAGIC_NUMBER = 5;\nint y = a + MAGIC_NUMBER;", result);
         }
 
@@ -42,7 +42,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceAMagicNumberInConditional()
         {
             string input = "if (x > 100)";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "100");
             Assert.AreEqual("const int MAGIC_NUMBER = 100;\nif (x > MAGIC_NUMBER)", result);
         }
 
@@ -53,7 +53,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceAMagicNumberInsideLoop()
         {
             string input = "for(int i=0;i<10;i++)";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "10");
             Assert.AreEqual("const int MAGIC_NUMBER = 10;\nfor(int i=0;i<MAGIC_NUMBER;i++)", result);
         }
 
@@ -64,7 +64,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceAMultipleMagicNumbers()
         {
             string input = "int a = 5; int b = 5;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "5");
             Assert.AreEqual("const int MAGIC_NUMBER = 5;\nint a = MAGIC_NUMBER; int b = MAGIC_NUMBER;", result);
         }
 
@@ -75,7 +75,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceAMagicNumberInArithmeticExpression()
         {
             string input = "int z = 3 * value;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "3");
             Assert.AreEqual("const int MAGIC_NUMBER = 3;\nint z = MAGIC_NUMBER * value;", result);
         }
 
@@ -86,7 +86,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceALargeMagicNumber()
         {
             string input = "int max = 1000;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "1000");
             Assert.AreEqual("const int MAGIC_NUMBER = 1000;\nint max = MAGIC_NUMBER;", result);
         }
 
@@ -97,7 +97,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceANegativeMagicNumber()
         {
             string input = "int x = -5;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "-5");
             Assert.AreEqual("const int MAGIC_NUMBER = -5;\nint x = MAGIC_NUMBER;", result);
         }
 
@@ -108,7 +108,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceAMagicNumberInReturnStatement()
         {
             string input = "return 7;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "7");
             Assert.AreEqual("const int MAGIC_NUMBER = 7;\nreturn MAGIC_NUMBER;", result);
         }
 
@@ -119,7 +119,7 @@ namespace UnitTest.ConstTests
         public void TestReplaceAMagicNumberInMultipleLinesOfCode()
         {
             string input = "uint a = 2;\nint b = a * 2;";
-            string result = refactoring.ReplaceMagicNumber(input);
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "2");
             Assert.AreEqual("const int MAGIC_NUMBER = 2;\nuint a = MAGIC_NUMBER;\nint b = a * MAGIC_NUMBER;", result);
         }
     }

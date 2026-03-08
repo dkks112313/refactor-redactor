@@ -8,7 +8,7 @@ namespace RefactoringTool
 {
     public class MagicNumberRefactoring
     {
-        public string ReplaceMagicNumber(string sourceCode)
+        public string ReplaceMagicNumber(string sourceCode, string nameOfConstant, string number)
         {
             throw new NotImplementedException();
         }
