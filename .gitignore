@@ -1,3 +1,3 @@
 .vs
-UnitTest/obj/
-WindowsFormsApp6/obj/
+./UnitTest/obj/
+./WindowsFormsApp6/obj/
