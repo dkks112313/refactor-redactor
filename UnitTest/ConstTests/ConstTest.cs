@@ -17,7 +17,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a single magic number with a constant.
         /// </summary>
         [TestMethod]
-        public void TestMethod1()
+        public void TestReplacementASingleMagicNumber()
         {
             string input = "int x = 10;";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -28,7 +28,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a magic number inside an expression.
         /// </summary>
         [TestMethod]
-        public void TestMethod2()
+        public void TestReplaceAMagicNumberInExpression()
         {
             string input = "int y = a + 5;";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -39,7 +39,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a magic number in a conditional statement.
         /// </summary>
         [TestMethod]
-        public void TestMethod3()
+        public void TestReplaceAMagicNumberInConditional()
         {
             string input = "if (x > 100)";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -50,7 +50,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a magic number inside a loop.
         /// </summary>
         [TestMethod]
-        public void TestMethod4()
+        public void TestReplaceAMagicNumberInsideLoop()
         {
             string input = "for(int i=0;i<10;i++)";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -61,7 +61,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of multiple identical magic numbers.
         /// </summary>
         [TestMethod]
-        public void TestMethod5()
+        public void TestReplaceAMultipleMagicNumbers()
         {
             string input = "int a = 5; int b = 5;";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -72,7 +72,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a magic number in an arithmetic expression.
         /// </summary>
         [TestMethod]
-        public void TestMethod6()
+        public void TestReplaceAMagicNumberInArithmeticExpression()
         {
             string input = "int z = 3 * value;";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -83,7 +83,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a large magic number.
         /// </summary>
         [TestMethod]
-        public void TestMethod7()
+        public void TestReplaceALargeMagicNumber()
         {
             string input = "int max = 1000;";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -94,7 +94,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a negative magic number.
         /// </summary>
         [TestMethod]
-        public void TestMethod8()
+        public void TestReplaceANegativeMagicNumber()
         {
             string input = "int x = -5;";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -105,7 +105,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a magic number in a return statement.
         /// </summary>
         [TestMethod]
-        public void TestMethod9()
+        public void TestReplaceAMagicNumberInReturnStatement()
         {
             string input = "return 7;";
             string result = refactoring.ReplaceMagicNumber(input);
@@ -116,7 +116,7 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a magic number appearing in multiple lines of code.
         /// </summary>
         [TestMethod]
-        public void TestMethod10()
+        public void TestReplaceAMagicNumberInMultipleLinesOfCode()
         {
             string input = "uint a = 2;\nint b = a * 2;";
             string result = refactoring.ReplaceMagicNumber(input);
