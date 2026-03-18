@@ -1,3 +1,5 @@
 .vs
+.md
+packages/
 **/bin/
 **/obj/
