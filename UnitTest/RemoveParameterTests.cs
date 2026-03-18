@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WindowsFormsApp6;
+using RefactorApp;
 
 namespace UnitTest
 {

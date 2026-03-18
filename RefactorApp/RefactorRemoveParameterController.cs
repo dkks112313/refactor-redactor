@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp6
+namespace RefactorApp
 {
     public class RefactorRemoveParameterController
     {
