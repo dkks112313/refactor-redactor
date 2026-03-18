@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WindowsFormsApp6\WindowsFormsApp6.csproj">
+    <ProjectReference Include="..\WindowsFormsApp6\RefactorApp.csproj">
       <Project>{20ac2725-9bcd-4a9d-b6c0-180808708197}</Project>
-      <Name>WindowsFormsApp6</Name>
+      <Name>RefactorApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
