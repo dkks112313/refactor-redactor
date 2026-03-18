@@ -30,7 +30,10 @@
 
 # 1 КОНЦЕПТУАЛЬНА МОДЕЛЬ СИСТЕМИ
 > UML-діаграма класів із поясненнями структури та призначення компонентів.
-<div align="center"><img alt="UML-діаграма класів" src="images/UML without methods.drawio.png"></div>
+
+Посилання для редагування діаграми (https://drive.google.com/file/d/1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd/view?usp=sharing)
+
+![test](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fdrive.google.com/uc?id=1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd)
 
 
 # 2 ПРОТОТИПИ КЛАСІВ
