@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp6
 {
-    public class RefactorController_RemoveParameter
+    public class RefactorRemoveParameterController
     {
         public string RemoveParameter(string CodeText, string methodName, string parameter)
         {

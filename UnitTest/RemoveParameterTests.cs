@@ -7,15 +7,9 @@ namespace UnitTest
     public class RemoveParameterTests
     {
         /// <summary>
-        /// Змінна для зберігання екземпляра RefactorController, який буде використовуватися у всіх тестах для виклику методу RemoveParameter.
+        /// Змінна для зберігання екземпляра RefactorController, який буде використовуватися у всіх тестах.
         /// </summary>
-        private RefactorController_RemoveParameter refactorController;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            refactorController = new RefactorController_RemoveParameter();
-        }
+        private RefactorRemoveParameterController refactorController;
 
         /// <summary>
         /// Перевіряє, що перший параметр методу коректно видаляється.
@@ -70,7 +64,7 @@ namespace UnitTest
         }
 
         /// <summary>
-        /// Перевіряє поведінку системи, якщо параметр для видалення не знайдено. Код методу не повинен змінюватися.
+        /// Перевіряє поведінку системи, якщо параметр для видалення не знайдено.
         /// </summary>
         [TestMethod]
         public void RemoveParameter_ShouldNotChangeCode_WhenParameterNotFound()
@@ -88,15 +82,11 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldAffectOnlySpecifiedMethod()
         {
-            string code =
-                "public void A(int x, int y) { } " +
-                "public void B(int a, int b) { }";
+            string code = "public void A(int x, int y) { } " + "public void B(int a, int b) { }";
 
             string result = refactorController.RemoveParameter(code, "A", "x");
 
-            Assert.AreEqual(
-                "public void A(int y) { } public void B(int a, int b) { }",
-                result);
+            Assert.AreEqual("public void A(int y) { } public void B(int a, int b) { }", result);
         }
 
         /// <summary>
@@ -113,7 +103,7 @@ namespace UnitTest
         }
 
         /// <summary>
-        /// Перевіряє поведінку алгоритму, якщо метод не має параметрів. У такому випадку код не повинен змінюватися.
+        /// Перевіряє поведінку алгоритму, якщо метод не має параметрів.
         /// </summary>
         [TestMethod]
         public void RemoveParameter_ShouldNotChangeMethodWithoutParameters()
