@@ -33,7 +33,7 @@
 
 Посилання для редагування діаграми (https://drive.google.com/file/d/1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd/view?usp=sharing)
 
-![test](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fdrive.google.com/uc?id=1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd)
+![test](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fdrive.google.com/uc?id=1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd&v=2)
 
 
 # 2 ПРОТОТИПИ КЛАСІВ
