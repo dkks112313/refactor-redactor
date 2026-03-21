@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp6
 {
-    partial class Form1
+    partial class RefactorForm
     {
         /// <summary>
         /// Required designer variable.
