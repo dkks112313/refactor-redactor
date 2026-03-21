@@ -33,7 +33,7 @@
 
 Посилання для редагування діаграми (https://drive.google.com/file/d/1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd/view?usp=sharing)
 
-![test](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fdrive.google.com/uc?id=1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd&v=2)
+<img width="965" height="854" alt="UML drawio" src="https://github.com/user-attachments/assets/1a394872-8484-41b0-a792-017f70ef11b5" />
 
 
 # 2 ПРОТОТИПИ КЛАСІВ
