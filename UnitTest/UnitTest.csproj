@@ -52,6 +52,7 @@
     <Compile Include="MagicNumberTests.cs" />
     <Compile Include="RemoveParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenameMethodTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
