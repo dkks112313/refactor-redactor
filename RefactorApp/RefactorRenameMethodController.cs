@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp6
 {
-    internal class RefactorRenameMethodController
+    public class RefactorRenameMethodController
     {
         public string RenameMethod(string nameMethod, string newNameMethod, string _empty)
         {
