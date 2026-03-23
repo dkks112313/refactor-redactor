@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RefactoringChange
 {
-    public class RefactorRenamingChangeController
+    public class RefactorChangeController
     {
         public string RenameVariable(string sourceCode, string oldName, string newName)
         {
