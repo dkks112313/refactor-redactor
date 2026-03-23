@@ -14,7 +14,7 @@ namespace UnitTest.Rem
         /// <summary>
         /// Змінна для зберігання екземпляра ChangeRefactor.
         /// </summary>
-        private RefactorChangeController ParameterRefactor;
+        private RefactorChangeController changeRefactor;
 
         [TestInitialize]
         public void Setup()
