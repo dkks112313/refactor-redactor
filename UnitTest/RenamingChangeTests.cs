@@ -9,148 +9,145 @@ using System.Threading.Tasks;
 namespace UnitTest.Rem
 {
     [TestClass]
-    public class RenamingChangeTests
+    public class ChangeTests
     {
         /// <summary>
-        /// Змінна для зберігання екземпляра RenamingChangeRefactor.
+        /// Змінна для зберігання екземпляра ChangeRefactor.
         /// </summary>
-        private RefactorRenamingChangeController removeParameterRefactor;
+        private RefactorChangeController ParameterRefactor;
 
         [TestInitialize]
         public void Setup()
         {
-            removeParameterRefactor = new RefactorRenamingChangeController();
+            changeRefactor = new RefactorChangeController();
         }
 
         /// <summary>
-        /// Перевіряє, що перший параметр методу коректно видаляється.
+        /// Перевіряє просте перейменування змінної.
         /// </summary>
         [TestMethod]
-        public void RemoveParameter_ShouldRemoveFirstParameter()
+        public void ChangeVariable_ShouldRenameSimpleVariable()
         {
-            string code = "public void Calculate(int a, int b) { }";
+            string code = "int a = 5;";
 
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "a");
+            string result = changeRefactor.RenameVariable(code, "a", "b");
 
-            Assert.AreEqual("public void Calculate(int b) { }", result);
+            Assert.AreEqual("int b = 5;", result);
         }
 
         /// <summary>
-        /// Перевіряє, що середній параметр видаляється.
+        /// Перевіряє перейменування змінної у виразі.
         /// </summary>
         [TestMethod]
-        public void RemoveParameter_ShouldRemoveMiddleParameter()
+        public void ChangeVariable_ShouldRenameInExpression()
         {
-            string code = "public void Calculate(int a, int b, int c) { }";
+            string code = "int a = 5; int c = a + 2;";
 
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "b");
+            string result = changeRefactor.RenameVariable(code, "a", "b");
 
-            Assert.AreEqual("public void Calculate(int a, int c) { }", result);
+            Assert.AreEqual("int b = 5; int c = b + 2;", result);
         }
 
         /// <summary>
-        /// Перевіряє, що останній параметр видаляється.
+        /// Перевіряє, що частини інших слів не змінюються.
         /// </summary>
         [TestMethod]
-        public void RemoveParameter_ShouldRemoveLastParameter()
+        public void ChangeVariable_ShouldNotRenamePartOfWord()
         {
-            string code = "public void Calculate(int a, int b) { }";
+            string code = "int cat = 5;";
 
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "b");
+            string result = changeRefactor.RenameVariable(code, "a", "b");
 
-            Assert.AreEqual("public void Calculate(int a) { }", result);
+            Assert.AreEqual("int cat = 5;", result);
         }
 
         /// <summary>
-        /// Перевіряє, що єдиний параметр видаляється.
+        /// Перевіряє перейменування у циклі.
         /// </summary>
         [TestMethod]
-        public void RemoveParameter_ShouldRemoveOnlyParameter()
+        public void ChangeVariable_ShouldRenameInLoop()
         {
-            string code = "public void Calculate(int a) { }";
+            string code = "for(int a = 0; a < 10; a++) { }";
 
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "a");
+            string result = changeRefactor.RenameVariable(code, "a", "b");
 
-            Assert.AreEqual("public void Calculate() { }", result);
+            Assert.AreEqual("for(int b = 0; b < 10; b++) { }", result);
         }
 
         /// <summary>
-        /// Перевіряє, що якщо параметр не існує — код не змінюється.
+        /// Перевіряє перейменування у межах методу.
         /// </summary>
         [TestMethod]
-        public void RemoveParameter_ParameterNotFound_ShouldNotChangeCode()
+        public void ChangeVariable_ShouldRenameInsideMethod()
         {
-            string code = "public void Calculate(int a, int b) { }";
+            string code = "void Test() { int a = 1; }";
 
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "x");
+            string result = changeRefactor.RenameVariable(code, "a", "b");
+
+            Assert.AreEqual("void Test() { int b = 1; }", result);
+        }
+
+        /// <summary>
+        /// Перевіряє, що змінні у рядках не змінюються.
+        /// </summary>
+        [TestMethod]
+        public void ChangeVariable_ShouldNotRenameInsideString()
+        {
+            string code = "Console.WriteLine(\"a = 5\");";
+
+            string result = changeRefactor.RenameVariable(code, "a", "b");
+
+            Assert.AreEqual("Console.WriteLine(\"a = 5\");", result);
+        }
+
+        /// <summary>
+        /// Перевіряє, що змінні у коментарях не змінюються.
+        /// </summary>
+        [TestMethod]
+        public void ChangeVariable_ShouldNotRenameInsideComment()
+        {
+            string code = "int a = 5; // a variable";
+
+            string result = changeRefactor.RenameVariable(code, "a", "b");
+
+            Assert.AreEqual("int b = 5; // a variable", result);
+        }
+        /// <summary>
+        /// Перевіряє, що змінна з підкресленням коректно перейменовується.
+        /// </summary>
+        [TestMethod]
+        public void ChangeVariable_ShouldHandleUnderscoreNames()
+        {
+            string code = "int my_var = 10; int x = my_var + 1;";
+
+            string result = changeRefactor.RenameVariable(code, "my_var", "new_var");
+
+            Assert.AreEqual("int new_var = 10; int x = new_var + 1;", result);
+        }
+        /// <summary>
+        /// Перевіряє, що змінна не змінюється, якщо нове ім'я таке ж саме.
+        /// </summary>
+        [TestMethod]
+        public void ChangeVariable_SameName_ShouldNotChangeCode()
+        {
+            string code = "int a = 5;";
+
+            string result = changeRefactor.RenameVariable(code, "a", "a");
 
             Assert.AreEqual(code, result);
         }
 
         /// <summary>
-        /// Перевіряє, що інший метод не змінюється.
+        /// Перевіряє, що змінна з цифрами в імені коректно перейменовується.
         /// </summary>
         [TestMethod]
-        public void RemoveParameter_WrongMethodName_ShouldNotChangeCode()
+        public void ChangeVariable_ShouldHandleNamesWithNumbers()
         {
-            string code = "public void Test(int a, int b) { }";
+            string code = "int a1 = 5; int b = a1 + 2;";
 
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "a");
+            string result = changeRefactor.RenameVariable(code, "a1", "x1");
 
-            Assert.AreEqual(code, result);
-        }
-
-        /// <summary>
-        /// Перевіряє коректність роботи при нестандартних пробілах.
-        /// </summary>
-        [TestMethod]
-        public void RemoveParameter_ShouldHandleSpacesCorrectly()
-        {
-            string code = "public void Calculate( int a , int b ) { }";
-
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "a");
-
-            Assert.AreEqual("public void Calculate(int b) { }", result);
-        }
-
-        /// <summary>
-        /// Перевіряє, що параметр видаляється коректно, незалежно від типу даних (об'єкти, масиви).
-        /// </summary>
-        [TestMethod]
-        public void RemoveParameter_ShouldHandleDifferentTypes()
-        {
-            string code = "public void Process(List<string> list, int[] numbers, double value) { }";
-
-            string result = removeParameterRefactor.RenameVariable(code, "Process", "numbers");
-
-            Assert.AreEqual("public void Process(List<string> list, double value) { }", result);
-        }
-
-        /// <summary>
-        /// Перевіряє, що параметр видаляється лише у вказаному методі, навіть якщо в коді є інший метод з таким самим параметром.
-        /// </summary>
-        [TestMethod]
-        public void RemoveParameter_ShouldOnlyAffectSpecifiedMethod()
-        {
-            string code = "public void First(int a) { } public void Second(int a) { }";
-
-            string result = removeParameterRefactor.RenameVariable(code, "Second", "a");
-
-            Assert.AreEqual("public void First(int a) { } public void Second() { }", result);
-        }
-
-        /// <summary>
-        /// Перевіряє поведінку системи, коли метод взагалі не має параметрів.
-        /// </summary>
-        [TestMethod]
-        public void RemoveParameter_EmptyParameters_ShouldNotChangeCode()
-        {
-            string code = "public void Calculate() { }";
-
-            string result = removeParameterRefactor.RenameVariable(code, "Calculate", "a");
-
-            Assert.AreEqual("public void Calculate() { }", result);
-
+            Assert.AreEqual("int x1 = 5; int b = x1 + 2;", result);
         }
     }
 }
