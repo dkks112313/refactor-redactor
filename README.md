@@ -2,69 +2,114 @@
 
 ## ПОСТАНОВКА ЗАДАЧІ
 > Короткий опис загального завдання та обраних варіантів з поясненням суті кожного методу рефакторингу.
-Метою роботи є розробка прототипу текстового редактора мовою програмування C#, призначеного для виконання рефакторингу вихідного коду програм мовою C++.
 
-Для досягнення цієї мети необхідно виконати такі завдання:
-- дослідити обрані методи рефакторингу, визначити їх призначення, вхідні та вихідні умови застосування;
-- ознайомитися з принципами підходу TDD (Test Driven Development) та технологією створення модульних (unit) тестів;
-- спроєктувати загальну архітектуру програми у вигляді UML-діаграми класів, що відображає основні компоненти системи та їх взаємозв’язки;
-- створити прототипи класів із оголошенням методів без реалізації їх логіки;
-- розробити модульні тести, що описують очікувану поведінку кожного методу рефакторингу (не менше 10 тестів для кожного варіанта).
-  
-У результаті виконання роботи має бути отримано прототип програмної системи без реалізації логіки методів рефакторингу та набір модульних тестів, які не проходять успішно. Це відповідає першому етапу підходу TDD — Red, на якому формулюються та перевіряються вимоги до майбутньої функціональності.
+Розробити текстовий редактор на мові програмування C# для виконання рефакторингу вихідних текстів програм мовою С++. Робота виконується проєктними командами по 3-4 особи. Кожен учасник команди обирає один варіант завдання з наведеного переліку. Варіанти всередині команди не повинні повторюватися. 
+Команда має:
+- дослідити обрані методи рефакторингу: зрозуміти їх суть, вхідні та вихідні умови, правила застосування;
+- ознайомитися з принципами TDD та технологією написання модульних (unit) тестів;
+- спроєктувати загальну архітектуру програми у вигляді UML-діаграми класів, яка відображає компоненти системи та їх взаємозв’язки;
+- створити прототипи класів з оголошеннями методів (без реалізації);
+- написати модульні тести, що описують очікувану поведінку кожного методу рефакторингу (по 10 тестів на варіант). 
 
-### Перейменування змінної
-Рефакторинг «Перейменування змінної» застосовується у випадках, коли ім’я змінної не відображає її призначення або є недостатньо зрозумілим.
-Метою цього методу є покращення читабельності та зрозумілості коду шляхом заміни існуючого імені змінної на більш інформативне. Під час виконання рефакторингу нове ім’я повинно бути замінене в усіх місцях використання змінної без зміни логіки роботи програми.
+У результаті має бути отриманий прототип програми без реалізації логіки методів рефакторингу та набір тестів, які не проходять (усі тести “червоні”), що відповідає першому кроку підходу TDD – Red.
 
-### Заміна магічного числа символічною константою
-Магічні числа — це числові значення, що використовуються в програмному коді без пояснення їх призначення. Використання таких значень ускладнює розуміння програми та її подальшу модифікацію.
-Рефакторинг «Заміна магічного числа символічною константою» полягає у створенні іменованої константи, яка відображає зміст відповідного числового значення. Після цього всі входження магічного числа у коді замінюються на створену константу. Такий підхід підвищує зрозумілість коду та полегшує його подальшу підтримку.
+### Вибрані варіанти
 
-### Перейменування методу
-Рефакторинг «Перейменування методу» використовується у випадках, коли назва методу не відповідає його фактичному призначенню або втратила актуальність у процесі розвитку програмного коду.
-Метою цього методу є надання методу більш зрозумілого та змістовного імені, що відображає виконувану ним функцію. Під час рефакторингу необхідно змінити назву методу та всі його виклики у програмі без зміни функціональної поведінки системи.
+#### 1. Перейменування змінної — Соломоненко А. А.
+Рефакторинг «Перейменування змінної» застосовується у випадках, коли ім’я змінної не відображає її призначення або є недостатньо зрозумілим. Метою цього методу є покращення читабельності та зрозумілості коду шляхом заміни існуючого імені змінної на більш інформативне. Під час виконання рефакторингу нове ім’я повинно бути замінене в усіх місцях використання змінної без зміни логіки роботи програми.
 
-### Видалення параметра
-Рефакторинг «Видалення параметра» застосовується у випадках, коли параметр методу не використовується в його реалізації або є зайвим.
-Наявність зайвих параметрів ускладнює інтерфейс методу та змушує розробників передавати непотрібні дані під час його виклику. Видалення таких параметрів спрощує структуру методу, підвищує зрозумілість коду та зменшує ймовірність помилок під час використання методу.
+#### 2. Заміна магічного числа символічною константою — Овчаренко Д. К.
+Магічні числа – це числові значення, що використовуються в програмному коді без пояснення їх призначення. Використання таких значень ускладнює розуміння програми та її подальшу модифікацію. Рефакторинг «Заміна магічного числа символічною константою» полягає у створенні іменованої константи, яка відображає зміст відповідного числового значення. Після цього всі входження магічного числа у коді замінюються на створену константу. Такий підхід підвищує зрозумілість коду та полегшує його подальшу підтримку.
+
+#### 8. Перейменування методу — Шайкова П. Д.
+Рефакторинг «Перейменування методу» використовується у випадках, коли назва методу не відповідає його фактичному призначенню або втратила актуальність у процесі розвитку програмного коду. Метою цього методу є надання методу більш зрозумілого та змістовного імені, що відображає виконувану ним функцію. Під час рефакторингу необхідно змінити назву методу та всі його виклики у програмі без зміни функціональної поведінки системи.
+
+#### 10. Видалення параметра — Солод І. М.
+Рефакторинг «Видалення параметра» застосовується у випадках, коли параметр методу не використовується в його реалізації або є зайвим. Наявність зайвих параметрів ускладнює інтерфейс методу та змушує розробників передавати непотрібні дані під час його виклику. Видалення таких параметрів спрощує структуру методу, підвищує зрозумілість коду та зменшує ймовірність помилок під час використання методу.
 
 
-## 1 КОНЦЕПТУАЛЬНА МОДЕЛЬ СИСТЕМИ
+## КОНЦЕПТУАЛЬНА МОДЕЛЬ СИСТЕМИ
 > UML-діаграма класів із поясненнями структури та призначення компонентів.
 
 Посилання для редагування діаграми (https://drive.google.com/file/d/1V6EcfGJ3mPW3xGk00QZrEFD3uISlAHzd/view?usp=sharing)
 
-<img width="965" height="854" alt="UML drawio" src="https://github.com/user-attachments/assets/1a394872-8484-41b0-a792-017f70ef11b5" />
+<img alt="UML" src="images/UML vLR1.png" />
 
 
-## 2 ПРОТОТИПИ КЛАСІВ
+## ПРОТОТИПИ КЛАСІВ
 > Вихідний код оголошень класів і методів (без реалізації).
-### Перейменування змінної
-> <Ім'я>
+### Перейменування змінної — Соломоненко А. А.
 
 ```cs
-<code>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RefactoringChange
+{
+    public class RefactorRenamingChangeController
+    {
+        public string RenameVariable(string sourceCode, string oldName, string newName)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
 ```
 
-### Заміна магічного числа символічною константою
-> <Ім'я>
+### Заміна магічного числа символічною константою — Овчаренко Д. К.
 
 ```cs
-<code>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RefactoringTool
+{
+    public class MagicNumberRefactoring
+    {
+        public string ReplaceMagicNumber(string sourceCode, string nameOfConstant, string number)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
 ```
 
-### Перейменування методу
-> <Ім'я>
+### Перейменування методу — Шайкова П. Д.
 
 ```cs
-<code>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsApp6
+{
+    public class RefactorRenameMethodController
+    {
+        public string RenameMethod(string nameMethod, string newNameMethod, string _empty)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
 ```
 
-### Видалення параметра
-> Солод Ігор
+### Видалення параметра — Солод І. М.
 
 ```cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace RefactorApp
 {
     public class RefactorRemoveParameterController
@@ -75,35 +120,436 @@ namespace RefactorApp
         }
     }
 }
+
 ```
 
-## 3 МОДУЛЬНІ ТЕСТИ
+## МОДУЛЬНІ ТЕСТИ
 > Вихідний код тестів з XML коментарями, що пояснюють, яку саме поведінку перевіряє кожен тест. Вказати розробника в звіті.
-### Перейменування змінної
-> <Ім'я>
+
+### Перейменування змінної — Соломоненко А. А.
 
 ```cs
-<code>
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RefactoringChange;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UnitTest.Rem
+{
+	[TestClass]
+	public class ChangeTests
+	{
+		/// <summary>
+		/// Змінна для зберігання екземпляра ChangeRefactor.
+		/// </summary>
+		private RefactorChangeController changeRefactor;
+
+		[TestInitialize]
+		public void Setup()
+		{
+			changeRefactor = new RefactorChangeController();
+		}
+
+		/// <summary>
+		/// Перевіряє просте перейменування змінної.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldRenameSimpleVariable()
+		{
+			string code = "int a = 5;";
+
+			string result = changeRefactor.RenameVariable(code, "a", "b");
+
+			Assert.AreEqual("int b = 5;", result);
+		}
+
+		/// <summary>
+		/// Перевіряє перейменування змінної у виразі.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldRenameInExpression()
+		{
+			string code = "int a = 5; int c = a + 2;";
+
+			string result = changeRefactor.RenameVariable(code, "a", "b");
+
+			Assert.AreEqual("int b = 5; int c = b + 2;", result);
+		}
+
+		/// <summary>
+		/// Перевіряє, що частини інших слів не змінюються.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldNotRenamePartOfWord()
+		{
+			string code = "int cat = 5;";
+
+			string result = changeRefactor.RenameVariable(code, "a", "b");
+
+			Assert.AreEqual("int cat = 5;", result);
+		}
+
+		/// <summary>
+		/// Перевіряє перейменування у циклі.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldRenameInLoop()
+		{
+			string code = "for(int a = 0; a < 10; a++) { }";
+
+			string result = changeRefactor.RenameVariable(code, "a", "b");
+
+			Assert.AreEqual("for(int b = 0; b < 10; b++) { }", result);
+		}
+
+		/// <summary>
+		/// Перевіряє перейменування у межах методу.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldRenameInsideMethod()
+		{
+			string code = "void Test() { int a = 1; }";
+
+			string result = changeRefactor.RenameVariable(code, "a", "b");
+
+			Assert.AreEqual("void Test() { int b = 1; }", result);
+		}
+
+		/// <summary>
+		/// Перевіряє, що змінні у рядках не змінюються.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldNotRenameInsideString()
+		{
+			string code = "Console.WriteLine(\"a = 5\");";
+
+			string result = changeRefactor.RenameVariable(code, "a", "b");
+
+			Assert.AreEqual("Console.WriteLine(\"a = 5\");", result);
+		}
+
+		/// <summary>
+		/// Перевіряє, що змінні у коментарях не змінюються.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldNotRenameInsideComment()
+		{
+			string code = "int a = 5; // a variable";
+
+			string result = changeRefactor.RenameVariable(code, "a", "b");
+
+			Assert.AreEqual("int b = 5; // a variable", result);
+		}
+
+		/// <summary>
+		/// Перевіряє, що змінна з підкресленням коректно перейменовується.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldHandleUnderscoreNames()
+		{
+			string code = "int my_var = 10; int x = my_var + 1;";
+
+			string result = changeRefactor.RenameVariable(code, "my_var", "new_var");
+
+			Assert.AreEqual("int new_var = 10; int x = new_var + 1;", result);
+		}
+
+		/// <summary>
+		/// Перевіряє, що змінна не змінюється, якщо нове ім'я таке ж саме.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_SameName_ShouldNotChangeCode()
+		{
+			string code = "int a = 5;";
+
+
+			string result = changeRefactor.RenameVariable(code, "a", "a");
+
+			Assert.AreEqual(code, result);
+		}
+
+		/// <summary>
+		/// Перевіряє, що змінна з цифрами в імені коректно перейменовується.
+		/// </summary>
+		[TestMethod]
+		public void ChangeVariable_ShouldHandleNamesWithNumbers()
+		{
+			string code = "int a1 = 5; int b = a1 + 2;";
+
+			string result = changeRefactor.RenameVariable(code, "a1", "x1");
+
+			Assert.AreEqual("int x1 = 5; int b = x1 + 2;", result);
+		}
+	}
+}
 ```
 
-### Заміна магічного числа символічною константою
-> <Ім'я>
+### Заміна магічного числа символічною константою — Овчаренко Д. К.
 
 ```cs
-<code>
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RefactoringTool;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UnitTest.ConstTests
+{
+    [TestClass]
+    public class MagicNumberTests
+    {
+        private MagicNumberRefactoring refactoring = new MagicNumberRefactoring();
+
+        /// <summary>
+        /// Verifies replacement of a single magic number with a constant.
+        /// </summary>
+        [TestMethod]
+        public void TestReplacementASingleMagicNumber()
+        {
+            string input = "int x = 10;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "10");
+            Assert.AreEqual("const int MAGIC_NUMBER = 10;\nint x = MAGIC_NUMBER;", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a magic number inside an expression.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceAMagicNumberInExpression()
+        {
+            string input = "int y = a + 5;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "5");
+            Assert.AreEqual("const int MAGIC_NUMBER = 5;\nint y = a + MAGIC_NUMBER;", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a magic number in a conditional statement.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceAMagicNumberInConditional()
+        {
+            string input = "if (x > 100)";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "100");
+            Assert.AreEqual("const int MAGIC_NUMBER = 100;\nif (x > MAGIC_NUMBER)", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a magic number inside a loop.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceAMagicNumberInsideLoop()
+        {
+            string input = "for(int i=0;i<10;i++)";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "10");
+            Assert.AreEqual("const int MAGIC_NUMBER = 10;\nfor(int i=0;i<MAGIC_NUMBER;i++)", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of multiple identical magic numbers.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceAMultipleMagicNumbers()
+        {
+            string input = "int a = 5; int b = 5;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "5");
+            Assert.AreEqual("const int MAGIC_NUMBER = 5;\nint a = MAGIC_NUMBER; int b = MAGIC_NUMBER;", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a magic number in an arithmetic expression.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceAMagicNumberInArithmeticExpression()
+        {
+            string input = "int z = 3 * value;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "3");
+            Assert.AreEqual("const int MAGIC_NUMBER = 3;\nint z = MAGIC_NUMBER * value;", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a large magic number.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceALargeMagicNumber()
+        {
+            string input = "int max = 1000;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "1000");
+            Assert.AreEqual("const int MAGIC_NUMBER = 1000;\nint max = MAGIC_NUMBER;", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a negative magic number.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceANegativeMagicNumber()
+        {
+            string input = "int x = -5;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "-5");
+            Assert.AreEqual("const int MAGIC_NUMBER = -5;\nint x = MAGIC_NUMBER;", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a magic number in a return statement.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceAMagicNumberInReturnStatement()
+        {
+            string input = "return 7;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "7");
+            Assert.AreEqual("const int MAGIC_NUMBER = 7;\nreturn MAGIC_NUMBER;", result);
+        }
+
+        /// <summary>
+        /// Verifies replacement of a magic number appearing in multiple lines of code.
+        /// </summary>
+        [TestMethod]
+        public void TestReplaceAMagicNumberInMultipleLinesOfCode()
+        {
+            string input = "uint a = 2;\nint b = a * 2;";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "2");
+            Assert.AreEqual("const int MAGIC_NUMBER = 2;\nuint a = MAGIC_NUMBER;\nint b = a * MAGIC_NUMBER;", result);
+        }
+    }
+}
 ```
 
-### Перейменування методу
-> <Ім'я>
+### Перейменування методу — Шайкова П. Д.
 
 ```cs
-<code>
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RefactoringApp;
+using RefactorApp;
+using RefactoringTool;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UnitTest
+{
+    [TestClass]
+    public class RenameMethodTests
+    {
+        private RefactorRenameMethodController refactorController = new RefactorRenameMethodController();
+
+        /// <summary>
+        /// Коректна робота тесту
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_ReturnRenameMethod()
+        {
+            var result = this.refactorController.RenameMethod("OldName", "NewName", null);
+            Assert.AreEqual("NewName", result);
+        }
+
+        /// <summary>
+        /// Відсутня стара назва методу
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_EmptyOldName_ReturnRenameMethod()
+        {
+            var result = this.refactorController.RenameMethod("", "NewName", null);
+            Assert.AreEqual("Error: empty parameter", result);
+        }
+
+        /// <summary>
+        /// Відсутня нова назва тесту
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_EmptyNewName_ReturnRenameMethod()
+        {
+            var result = this.refactorController.RenameMethod("OldName", "", null);
+            Assert.AreEqual("OldName", result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_SpecialCharacters_ReturnRenameMethod()
+        {
+            var result = this.refactorController.RenameMethod("Old_Method1", "New_Method2", null);
+            Assert.AreEqual("New_Method2", result);
+        }
+
+        /// <summary>
+        /// Чутливість до регістру
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_CaseSensitiveChange_ReturnsNewName()
+        {
+            var result = this.refactorController.RenameMethod("method", "Method", null);
+            Assert.AreEqual("Method", result);
+        }
+
+        /// <summary>
+        /// максимальна довжина назви методу
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_MaxLengthName_ReturnsNewName()
+        {
+            var newName = new string('a', 255);
+
+            var result = this.refactorController.RenameMethod("OldName", newName, null);
+
+            Assert.AreEqual(newName, result);
+        }
+
+        /// <summary>
+        /// Імена з пробілами
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_NameWithSpaces_ReturnsNewName()
+        {
+            var result = this.refactorController.RenameMethod("OldName", "New Name", null);
+            Assert.AreEqual("Error: spaces", result);
+        }
+
+        /// <summary>
+        /// Неправильні символи
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_InvalidCharacters_ReturnsNewName()
+        {
+            var result = this.refactorController.RenameMethod("OldName", "New@Name", null);
+            Assert.AreEqual("Error: invalid characters", result);
+        }
+
+        /// <summary>
+        /// Старе ім'я не знайдено
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_OldNameNotFound_ReturnsNewName()
+        {
+            var result = this.refactorController.RenameMethod("Name", "NewName", null);
+            Assert.AreEqual("Error: method name not found", result);
+        }
+
+        /// <summary>
+        /// Назва починається з цифри
+        /// </summary>
+        [TestMethod]
+        public void RenameMethod_StartsWithDigit_ReturnsNewName()
+        {
+            var result = this.refactorController.RenameMethod("OldName", "1NewName", null);
+            Assert.AreEqual("Error: starts with digit", result);
+        }
+    }
+}
 ```
 
-### Видалення параметра
-> Солод Ігор
+###  Видалення параметра — Солод І. М.
 
 ```cs
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RefactorApp;
+
 namespace UnitTest
 {
     [TestClass]
@@ -248,28 +694,26 @@ namespace UnitTest
 ```
 
 
-## 4 РЕЗУЛЬТАТИ ЗАПУСКУ ТЕСТІВ
+## РЕЗУЛЬТАТИ ЗАПУСКУ ТЕСТІВ
 > Скриншот, що підтверджує невдале проходження всіх тестів (“червоний” стан).
-### Перейменування змінної
-> <Ім'я>
+### Перейменування змінної — Соломоненко А. А.
+
+<img src="images/tests/ChangeTests.png">
+
+### Заміна магічного числа символічною константою — Овчаренко Д. К.
+
+<img src="images/tests/MagicNumberTests.png">
+
+### Перейменування методу — Шайкова П. Д.
+
+<img src="images/tests/RenameMethodTests.png">
+
+### Видалення параметра — Солод І. М.
+
+<img src="images/tests/RemoveParameterTests.png">
 
 
-### Заміна магічного числа символічною константою
-> <Ім'я>
+## ВИСНОВКИ
+У ході виконання роботи було проведено дослідження предметної області, пов’язаної з інструментами рефакторингу програмного коду. Проаналізовано основні підходи до перейменування методів та замінної видалення параметра, заміна магічного числа символічної константою.
 
-
-
-### Перейменування методу
-> <Ім'я>
-
-
-
-
-### Видалення параметра
-> Солод Ігор
-
-<img width="1699" height="294" alt="image" src="https://github.com/user-attachments/assets/489e3cee-5be0-4e2a-9923-a5139eafba2c" />
-
-
-
-## АНАЛІЗ РЕЗУЛЬТАТІВ ТА ВИСНОВКИ
+У процесі проєктування розроблено прототип програмного продукту без реалізації внутрішньої логіки, що відповідає підходу TDD (Test-Driven Development). Було створено набір модульних тестів, які описують функціональні вимоги та очікувані результати роботи системи. Оскільки реалізація методів відсутня, тести на даному етапі не проходять, що є передбачуваним.
