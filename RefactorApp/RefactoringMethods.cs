@@ -9,7 +9,7 @@ namespace RefactoringApp
     public interface RefactoringMethods
     {
         string Name { get; }
-        List<RefacrorParameter> GetParameters();
+        List<RefactorParameter> GetParameters();
         string Execute(string code, Dictionary<string, string> parameters);
     }
 }

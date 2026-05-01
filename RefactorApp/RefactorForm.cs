@@ -59,6 +59,8 @@ namespace WindowsFormsApp6
                 DropDownStyle = ComboBoxStyle.DropDownList,
             };
 
+            refactorSelector.SelectedIndexChanged += RefactorChanged;
+
             //місце для параметрів, необхідних для методів рефакторингу
             paramsPanel = new Panel
             {
@@ -84,12 +86,46 @@ namespace WindowsFormsApp6
             this.Controls.Add(refactorSelector);
             this.Controls.Add(paramsPanel);
 
-            /*refactorings = new List<RefactoringMethods>
+            refactorings = new List<RefactoringMethods>
             {
                 new RefactorRenameMethodController()
-            };*/
+            };
 
+            refactorSelector.DataSource = refactorings;
+            refactorSelector.DisplayMember = "Name";
+        }
 
+        private void RefactorChanged(object sender, EventArgs e)
+        {
+            paramsPanel.Controls.Clear();
+
+            var selected = (RefactoringMethods)refactorSelector.SelectedItem;
+            var parameters = selected.GetParameters();
+
+            int top = 10;
+
+            foreach (var param in parameters) 
+            {
+                Label label = new Label
+                {
+                    Text = param.Name,
+                    Left = 10,
+                    Top = top,
+                };
+
+                TextBox textbox = new TextBox
+                {
+                    Left = 10,
+                    Top = top + 20,
+                    Width = 160,
+                    Tag = param.Value
+                };
+
+                paramsPanel.Controls.Add(label);
+                paramsPanel.Controls.Add(textbox);
+
+                top += 60;
+            }
         }
     }
 }

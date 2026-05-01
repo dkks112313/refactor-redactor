@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RefactoringApp
 {
-    public class RefacrorParameter
+    public class RefactorParameter
     {
        public string Name { get; set; }
        public string Value { get; set; }
