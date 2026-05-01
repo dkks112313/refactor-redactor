@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using RefactoringApp;
+
 namespace WindowsFormsApp6
 {
     internal static class Program
