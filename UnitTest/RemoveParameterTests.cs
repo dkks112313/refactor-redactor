@@ -295,5 +295,28 @@ namespace UnitTest
 
             Assert.AreEqual(expected, result);
         }
+
+        /// <summary>
+        /// Перевіряє, чи видалення параметра за назвою не призводить до видалення параметрів із схожими, але неідентичними назвами.
+        /// </summary>
+        [TestMethod]
+        public void RemoveParameter_ShouldNotRemoveSimilarNames()
+        {
+            string code = @"
+                Class Logger {
+                public:
+                    void Receive(object sender, EventArgs e) {};
+                };";
+
+            string expected = @"
+                Class Logger {
+                public:
+                    void Receive(object sender) {};
+                };";
+
+            string result = refactorController.RemoveParameter(code, "Receive", "e");
+
+            Assert.AreEqual(expected, result);
+        }
     }
 }

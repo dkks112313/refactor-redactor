@@ -29,7 +29,7 @@ namespace RefactorApp
                 var parameters = SplitParameters(paramList);
 
                 // Фільтруємо список параметрів, видаляючи всі входження вказаного параметра.
-                var filtred = parameters.Where(p => !p.Contains(parameter)).ToList(); // 
+                var filtred = parameters.Where(p => !IsSameParameter(p, parameter)).ToList(); // 
 
                 // Якщо після фільтрації список параметрів порожній, замінюємо його на порожні дужки.
                 if (filtred.Count == 0)
@@ -91,6 +91,21 @@ namespace RefactorApp
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Визначає, чи збігається вказане ім'я параметра з іменем об'єкта.
+        /// </summary>
+        /// <param name="param">Рядок параметра, який потрібно обчислити. Пробіли на початку та в кінці ігноруються.</param>
+        /// <param name="target">Ім'я цільового параметра для порівняння.</param>
+        /// <returns>true, якщо ім'я, витягнуте з param, збігається з target; в іншому випадку false.</returns>
+        bool IsSameParameter(string param, string target)
+        {
+            // Розділяємо рядок параметра на частини за пробілами і беремо останню частину як ім'я параметра, яке потрібно порівняти з цільовим ім'ям.
+            var parts = param.Trim().Split(' ');
+            var name = parts.Last();
+
+            return name == target;
         }
     }
 }
