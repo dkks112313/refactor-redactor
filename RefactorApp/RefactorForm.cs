@@ -29,7 +29,6 @@ namespace WindowsFormsApp6
             this.Width = 900;
             this.Height = 600;
 
-            //Блок ввода кода
             inputCode = new TextBox
             {
                 Multiline = true,
@@ -50,7 +49,6 @@ namespace WindowsFormsApp6
                 ScrollBars = ScrollBars.Vertical
             };
 
-            //Блок вібора метода рефакторинга
             refactorSelector = new ComboBox
             {
                 Left = 650,
@@ -61,7 +59,6 @@ namespace WindowsFormsApp6
 
             refactorSelector.SelectedIndexChanged += RefactorChanged;
 
-            //місце для параметрів, необхідних для методів рефакторингу
             paramsPanel = new Panel
             {
                 Left = 650,
@@ -79,6 +76,8 @@ namespace WindowsFormsApp6
                 Width = 120,
                 Height = 40
             };
+
+            runButton.Click += RunClicked;
 
             this.Controls.Add(inputCode);
             this.Controls.Add(outputCode);
@@ -126,6 +125,23 @@ namespace WindowsFormsApp6
 
                 top += 60;
             }
+        }
+
+        private void RunClicked(object sender, EventArgs e)
+        {
+            var selected = (RefactoringMethods)refactorSelector.SelectedItem;
+            var parameters = new Dictionary<string, string>();
+
+            foreach(Control c in paramsPanel.Controls)
+            {
+                if(c is TextBox tb && tb.Tag != null)
+                {
+                    parameters[tb.Tag.ToString()] = tb.Text;
+                }
+            }
+
+            string results = selected.Execute(inputCode.Text, parameters);
+            outputCode.Text = results;
         }
     }
 }

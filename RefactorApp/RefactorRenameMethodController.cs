@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 using RefactoringApp;
 
@@ -18,9 +19,19 @@ namespace RefactoringApp
             new RefactorParameter {Name = "New", Value = "newName"}
         };
 
-        public string RenameMethod(string nameMethod, string newNameMethod, string _empty)
+        public string RenameMethod(string nameMethod, string newNameMethod, string code)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(nameMethod) || string.IsNullOrWhiteSpace(newNameMethod)) { return code; }
+
+            string patternForCall = $@"\b{nameMethod}\s*\(";
+            code = Regex.Replace(code, patternForCall, newNameMethod + "(", RegexOptions.Multiline);
+
+            string patternForAdvert = $@"\b(\w+\s+)+{nameMethod}\s*\(";
+            code = Regex.Replace(code, patternForAdvert,
+                match => match.Value.Replace(nameMethod, newNameMethod),
+                RegexOptions.Multiline);
+
+            return code;
         }
 
         public string Execute(string code, Dictionary<string, string> parameters)
