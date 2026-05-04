@@ -12,16 +12,36 @@ namespace UnitTest
         private RefactorRemoveParameterController refactorController;
 
         /// <summary>
+        /// Ініціалізує екземпляр RefactorController перед кожним тестом, щоб забезпечити чистий стан для кожного тесту.
+        /// </summary>
+        [TestInitialize]
+        public void Setup()
+        {
+            refactorController = new RefactorRemoveParameterController();
+        }
+
+        /// <summary>
         /// Перевіряє, що перший параметр методу коректно видаляється.
         /// </summary>
         [TestMethod]
         public void RemoveParameter_ShouldRemoveFirstParameter()
         {
-            string code = "public void Calculate(int a, int b) { }";
+            string code = @"
+                class Calculator {
+                public:
+                    void Calculate(int a, int b) { }
+                };";
+
+            string expected = @"
+                class Calculator {
+                public:
+                    void Calculate(int b) { }
+                };";
+
 
             string result = refactorController.RemoveParameter(code, "Calculate", "a");
 
-            Assert.AreEqual("public void Calculate(int b) { }", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -30,11 +50,21 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldRemoveLastParameter()
         {
-            string code = "public void PrintData(string name, int age) { }";
+            string code = @"
+                class Printer {
+                public:
+                    void PrintData(string name, int age) { }
+                };";
+
+            string expected = @"
+                class Printer {
+                public:
+                    void PrintData(string name) { }
+                };";
 
             string result = refactorController.RemoveParameter(code, "PrintData", "age");
 
-            Assert.AreEqual("public void PrintData(string name) { }", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -43,11 +73,21 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldRemoveMiddleParameter()
         {
-            string code = "public void SendMessage(string from, string text, string to) { }";
+            string code = @"
+                class Messenger {
+                public:
+                    void SendMessage(string from, string text, string to) { }
+                };";
+
+            string expected = @"
+                class Messenger {
+                public:
+                    void SendMessage(string from, string to) { }
+                };";
 
             string result = refactorController.RemoveParameter(code, "SendMessage", "text");
 
-            Assert.AreEqual("public void SendMessage(string from, string to) { }", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -56,11 +96,21 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldHandleSingleParameter()
         {
-            string code = "public void Reset(int value) { }";
+            string code = @"
+                class System {
+                public:
+                    void Reset(int value) { }
+                };";
+
+            string expected = @"
+                class System {
+                public:
+                    void Reset() { }
+                };";
 
             string result = refactorController.RemoveParameter(code, "Reset", "value");
 
-            Assert.AreEqual("public void Reset() { }", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -69,11 +119,17 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldNotChangeCode_WhenParameterNotFound()
         {
-            string code = "public void StartGame(int level, string mode) { }";
+            string code = @"
+                class Game {
+                public:
+                    void StartGame(int level, string mode) { }
+                };";
+
+            string expected = code;
 
             string result = refactorController.RemoveParameter(code, "StartGame", "score");
 
-            Assert.AreEqual("public void StartGame(int level, string mode) { }", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -82,24 +138,74 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldAffectOnlySpecifiedMethod()
         {
-            string code = "public void A(int x, int y) { } " + "public void B(int a, int b) { }";
+            string code = @"
+                class Linker {
+                public:
+                    void Start(int x, int y) { }
+                    void End(int a, int b) { }
+                };";
 
-            string result = refactorController.RemoveParameter(code, "A", "x");
+            string expected = @"
+                class Linker {
+                public:
+                    void Start(int y) { }
+                    void End(int a, int b) { }
+                };";
 
-            Assert.AreEqual("public void A(int y) { } public void B(int a, int b) { }", result);
+
+            string result = refactorController.RemoveParameter(code, "Start", "x");
+
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
-        /// Перевіряє коректність роботи рефакторингу для статичного методу.
+        /// Перевіряє видалення параметра, який є посиланням.
         /// </summary>
         [TestMethod]
-        public void RemoveParameter_ShouldWorkForStaticMethod()
+        public void RemoveParameter_ShouldWorkWithReferenceParameter()
         {
-            string code = "public static void Log(string message, int level) { }";
+            string code = @"
+                class DataProcessor {
+                public:
+                    void Process(std::string& data, int count) { }
+                };";
 
-            string result = refactorController.RemoveParameter(code, "Log", "level");
+            string expected = @"
+                class DataProcessor {
+                public:
+                    void Process(int count) { }
+                };";
 
-            Assert.AreEqual("public static void Log(string message) { }", result);
+            string result = refactorController.RemoveParameter(code, "Process", "data");
+
+            Assert.AreEqual(expected, result);
+        }
+
+        /// <summary>
+        /// Перевіряє видалення параметра, який є шаблонним типом.
+        /// </summary>
+        [TestMethod]
+        public void RemoveParameter_ShouldWorkWithTemplateParameter()
+        {
+            string code = @"
+                #include <vector>
+
+                class Container {
+                public:
+                    void Add(std::vector<int> items, int count) { }
+                };";
+
+            string expected = @"
+                #include <vector>
+
+                class Container {
+                public:
+                    void Add(int count) { }
+                };";
+
+            string result = refactorController.RemoveParameter(code, "Add", "items");
+
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -108,11 +214,17 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldNotChangeMethodWithoutParameters()
         {
-            string code = "public void Start() { }";
+            string code = @"
+                class App {
+                public:
+                    void Enter() { }
+                };";
 
-            string result = refactorController.RemoveParameter(code, "Start", "x");
+            string expected = code;
 
-            Assert.AreEqual("public void Start() { }", result);
+            string result = refactorController.RemoveParameter(code, "Enter", "x");
+
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -121,11 +233,21 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldWorkWithMultipleParameters()
         {
-            string code = "public void Move(int x, int y, int z, int speed) { }";
+            string code = @"
+                class Player {
+                public:
+                    void Move(int x, int y, int z, int speed, string name) { }
+                };";
+
+            string expected = @"
+                class Player {
+                public:
+                    void Move(int x, int y, int speed, string name) { }
+                };";
 
             string result = refactorController.RemoveParameter(code, "Move", "z");
 
-            Assert.AreEqual("public void Move(int x, int y, int speed) { }", result);
+            Assert.AreEqual(expected, result);
         }
 
         /// <summary>
@@ -134,11 +256,67 @@ namespace UnitTest
         [TestMethod]
         public void RemoveParameter_ShouldNotModifyMethodBody()
         {
-            string code = "public void Add(int a, int b) { int c = a + b; }";
+            string code = @"
+                class Math {
+                public:
+                    void Add(int a, int b) { int c = a + b; }
+                };";
+
+            string expected = @"
+                class Math {
+                public:
+                    void Add(int a) { int c = a + b; }
+                };";
 
             string result = refactorController.RemoveParameter(code, "Add", "b");
 
-            Assert.AreEqual("public void Add(int a) { int c = a + b; }", result);
+            Assert.AreEqual(expected, result);
+        }
+
+        /// <summary>
+        /// Перевіряє видалення параметра з методу, який має складну сигнатуру з посиланнями та шаблонними типами.
+        /// </summary>
+        [TestMethod]
+        public void RemoveParameter_ShouldHandleComplexSignature()
+        {
+            string code = @"
+                class Network {
+                public:
+                    void Send(const std::string& host, int port, std::vector<int> data) { }
+                };";
+
+            string expected = @"
+                class Network {
+                public:
+                    void Send(const std::string& host, std::vector<int> data) { }
+                };";
+
+            string result = refactorController.RemoveParameter(code, "Send", "port");
+
+            Assert.AreEqual(expected, result);
+        }
+
+        /// <summary>
+        /// Перевіряє, чи видалення параметра за назвою не призводить до видалення параметрів із схожими, але неідентичними назвами.
+        /// </summary>
+        [TestMethod]
+        public void RemoveParameter_ShouldNotRemoveSimilarNames()
+        {
+            string code = @"
+                Class Logger {
+                public:
+                    void Receive(object sender, EventArgs e) {};
+                };";
+
+            string expected = @"
+                Class Logger {
+                public:
+                    void Receive(object sender) {};
+                };";
+
+            string result = refactorController.RemoveParameter(code, "Receive", "e");
+
+            Assert.AreEqual(expected, result);
         }
     }
 }
