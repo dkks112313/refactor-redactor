@@ -101,7 +101,6 @@ namespace WindowsFormsApp6
             {
                 new RefactorRenameMethodController(),
                 new MagicNumberRefactoring(),
-                new RefactorRemoveParameterController()
             };
 
             refactorSelector.DataSource = refactorings;
