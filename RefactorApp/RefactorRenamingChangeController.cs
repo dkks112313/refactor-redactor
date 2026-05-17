@@ -1,75 +1,103 @@
-using System.Linq;
+using RefactoringApp;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace RefactoringChange
 {
-    public class RefactorChangeController
+    public class RefactorRenameVariableController : RefactoringMethods
     {
-        public string RenameVariable(string sourceCode, string oldName, string newName)
+        public string Name => "Rename Variable";
+
+        public List<RefactorParameter> GetParameters()
         {
+            return new List<RefactorParameter>
+            {
+                new RefactorParameter
+                {
+                    Name = "Old Name",
+                    Value = "oldName"
+                },
 
-            // Якщо старе та нове ім'я однакові — код не потрібно змінювати
+                new RefactorParameter
+                {
+                    Name = "New Name",
+                    Value = "newName"
+                }
+            };
+        }
+
+        public string Execute(
+            string code,
+            Dictionary<string, string> parameters)
+        {
+            return RenameVariable(
+                code,
+                parameters["oldName"],
+                parameters["newName"]
+            );
+        }
+
+        public string RenameVariable(
+            string sourceCode,
+            string oldName,
+            string newName)
+        {
+            if (string.IsNullOrWhiteSpace(oldName) ||
+                string.IsNullOrWhiteSpace(newName))
+            {
+                return "Error: empty parameter";
+            }
+
             if (oldName == newName)
+            {
                 return sourceCode;
+            }
 
-            // Тут тимчасово прибираються рядки:
-            // "a = 5"
-            // щоб змінна всередині них не перейменувалась
+            if (!sourceCode.Contains(oldName))
+            {
+                return "Error: variable not found";
+            }
 
             string[] strings;
-
-            // Замінюємо рядки на спеціальні мітки:
-            // __STRING0__, __STRING1__ ...
             sourceCode = ProtectStrings(sourceCode, out strings);
 
             string[] comments;
-
-            // Замінюємо коментарі на:
-            // __COMMENT0__, __COMMENT1__ ...
             sourceCode = ProtectComments(sourceCode, out comments);
 
-            // Перейменування змінної
+            string pattern =
+                $@"\b{Regex.Escape(oldName)}\b";
 
-            // \b означає "межа слова"
-            // Це потрібно, щоб:
-            // a -> b
-            // не змінювало:
-            // cat -> cbt
-
-            string pattern = $@"\b{Regex.Escape(oldName)}\b";
-
-            // Замінюємо тільки окремі слова
-            sourceCode = Regex.Replace(sourceCode, pattern, newName);
-
-            // Повернення коментарів
+            sourceCode = Regex.Replace(
+                sourceCode,
+                pattern,
+                newName
+            );
 
             for (int i = 0; i < comments.Length; i++)
             {
                 sourceCode = sourceCode.Replace(
-                    $"__COMMENT{i}__",
+                    $"COMMENT{i}",
                     comments[i]
                 );
             }
 
-            // Повернення рядків
-
             for (int i = 0; i < strings.Length; i++)
             {
                 sourceCode = sourceCode.Replace(
-                    $"__STRING{i}__",
+                    $"STRING{i}",
                     strings[i]
                 );
             }
 
-            // Повертаємо готовий код
             return sourceCode;
         }
 
-        // Метод для тимчасового приховування рядків
-        private string ProtectStrings(string code, out string[] strings)
+        private string ProtectStrings(
+            string code,
+            out string[] strings)
         {
-            // Знаходимо всі рядки "text"
-            var matches = Regex.Matches(code, "\".*?\"");
+            var matches =
+                Regex.Matches(code, "\".*?\"");
 
             strings = new string[matches.Count];
 
@@ -78,24 +106,23 @@ namespace RefactoringChange
                 strings[i] = matches[i].Value;
             }
 
-            // Замінюємо кожен рядок на мітку
             for (int i = 0; i < strings.Length; i++)
             {
                 code = code.Replace(
                     strings[i],
-                    $"__STRING{i}__"
+                    $"STRING{i}"
                 );
             }
 
             return code;
         }
 
-        // Метод для тимчасового приховування коментарів
-        private string ProtectComments(string code, out string[] comments)
+        private string ProtectComments(
+            string code,
+            out string[] comments)
         {
-            // Знаходимо однорядкові коментарі // comment
-
-            var matches = Regex.Matches(code, @"//.*");
+            var matches =
+                Regex.Matches(code, @"//.*");
 
             comments = new string[matches.Count];
 
@@ -104,12 +131,11 @@ namespace RefactoringChange
                 comments[i] = matches[i].Value;
             }
 
-            // Замінюємо їх на спеціальні мітки
             for (int i = 0; i < comments.Length; i++)
             {
                 code = code.Replace(
                     comments[i],
-                    $"__COMMENT{i}__"
+                    $"COMMENT{i}"
                 );
             }
 
