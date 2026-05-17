@@ -2,10 +2,43 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace RefactorApp
+namespace RefactoringApp
 {
-    public class RefactorRemoveParameterController
+    public class RefactorRemoveParameterController : RefactoringMethods
     {
+        /// <summary>
+        /// Назва рефакторингу.
+        /// </summary>
+        public string Name => "Remove Parameter";
+
+        /// <summary>
+        /// Отримує список параметрів, необхідних для операцій рефакторингу.
+        /// </summary>
+        /// <returns>Список об’єктів <see cref="RefactorParameter"/>, що представляють імена методів та параметрів, які використовуються під час рефакторингу.</returns>
+        public List<RefactorParameter> GetParameters() => new List<RefactorParameter>()
+        {
+            new RefactorParameter {Name = "Method Name", Value = "methodName"},
+            new RefactorParameter {Name = "Parameter Name", Value = "parameterName"}
+        };
+
+        /// <summary>
+        /// Видаляє вказаний параметр із заданого коду на основі наданих імен методів та параметрів.
+        /// </summary>
+        /// <remarks>Словник «parameters» повинен містити дійсні записи для «methodName» та
+        /// «parameterName».</remarks>
+        /// <param name="code">Вихідний код, з якого буде видалено параметр.</param>
+        /// <param name="parameters">Словник, що містить ключі «methodName» та «parameterName», які вказують метод та параметр, які потрібно видалити.
+        /// Обидва значення не повинні бути нульовими та порожніми.</param>
+        /// <returns>Рядок, що містить змінений код із вилученим вказаним параметром.</returns>
+        public string Execute(string code, Dictionary<string, string> parameters)
+        {
+            return RemoveParameter(
+                code,
+                parameters["methodName"],
+                parameters["parameterName"]
+            );
+        }
+
         /// <summary>
         /// Видаляє вказаний параметр зі списку параметрів усіх викликів заданого методу в межах тексту коду.
         /// </summary>
