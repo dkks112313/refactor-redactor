@@ -13,16 +13,24 @@ namespace UnitTest
     [TestClass]
     public class RenameMethodTests
     {
-        private RefactorRenameMethodController refactorController = new RefactorRenameMethodController();
+        private RefactorRenameMethodController refactorController =
+            new RefactorRenameMethodController();
 
         /// <summary>
-        /// Коректна робота тесту
+        /// Коректне перейменування методу
         /// </summary>
         [TestMethod]
         public void RenameMethod_ReturnRenameMethod()
         {
-            var result = this.refactorController.RenameMethod("OldName", "NewName", null);
-            Assert.AreEqual("NewName", result);
+            string code = "void OldName() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "OldName",
+                "NewName",
+                code
+            );
+
+            Assert.IsTrue(result.Contains("NewName"));
         }
 
         /// <summary>
@@ -31,28 +39,49 @@ namespace UnitTest
         [TestMethod]
         public void RenameMethod_EmptyOldName_ReturnRenameMethod()
         {
-            var result = this.refactorController.RenameMethod("", "NewName", null);
+            string code = "void OldName() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "",
+                "NewName",
+                code
+            );
+
             Assert.AreEqual("Error: empty parameter", result);
         }
 
         /// <summary>
-        /// Відсутня нова назва тесту
+        /// Відсутня нова назва методу
         /// </summary>
         [TestMethod]
         public void RenameMethod_EmptyNewName_ReturnRenameMethod()
         {
-            var result = this.refactorController.RenameMethod("OldName", "", null);
-            Assert.AreEqual("OldName", result);
+            string code = "void OldName() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "OldName",
+                "",
+                code
+            );
+
+            Assert.AreEqual("Error: empty parameter", result);
         }
 
         /// <summary>
-        /// 
+        /// Назви з підкресленням
         /// </summary>
         [TestMethod]
         public void RenameMethod_SpecialCharacters_ReturnRenameMethod()
         {
-            var result = this.refactorController.RenameMethod("Old_Method1", "New_Method2", null);
-            Assert.AreEqual("New_Method2", result);
+            string code = "void Old_Method1() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "Old_Method1",
+                "New_Method2",
+                code
+            );
+
+            Assert.IsTrue(result.Contains("New_Method2"));
         }
 
         /// <summary>
@@ -61,30 +90,50 @@ namespace UnitTest
         [TestMethod]
         public void RenameMethod_CaseSensitiveChange_ReturnsNewName()
         {
-            var result = this.refactorController.RenameMethod("method", "Method", null);
-            Assert.AreEqual("Method", result);
+            string code = "void method() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "method",
+                "Method",
+                code
+            );
+
+            Assert.IsTrue(result.Contains("Method"));
         }
 
         /// <summary>
-        /// максимальна довжина назви методу
+        /// Максимальна довжина назви методу
         /// </summary>
         [TestMethod]
         public void RenameMethod_MaxLengthName_ReturnsNewName()
         {
             var newName = new string('a', 255);
 
-            var result = this.refactorController.RenameMethod("OldName", newName, null);
+            string code = "void OldName() { }";
 
-            Assert.AreEqual(newName, result);
+            var result = this.refactorController.RenameMethod(
+                "OldName",
+                newName,
+                code
+            );
+
+            Assert.IsTrue(result.Contains(newName));
         }
 
         /// <summary>
         /// Імена з пробілами
         /// </summary>
         [TestMethod]
-        public void RenameMethod_NameWithSpaces_ReturnsNewName()
+        public void RenameMethod_NameWithSpaces_ReturnsError()
         {
-            var result = this.refactorController.RenameMethod("OldName", "New Name", null);
+            string code = "void OldName() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "OldName",
+                "New Name",
+                code
+            );
+
             Assert.AreEqual("Error: spaces", result);
         }
 
@@ -92,9 +141,16 @@ namespace UnitTest
         /// Неправильні символи
         /// </summary>
         [TestMethod]
-        public void RenameMethod_InvalidCharacters_ReturnsNewName()
+        public void RenameMethod_InvalidCharacters_ReturnsError()
         {
-            var result = this.refactorController.RenameMethod("OldName", "New@Name", null);
+            string code = "void OldName() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "OldName",
+                "New@Name",
+                code
+            );
+
             Assert.AreEqual("Error: invalid characters", result);
         }
 
@@ -102,9 +158,16 @@ namespace UnitTest
         /// Старе ім'я не знайдено
         /// </summary>
         [TestMethod]
-        public void RenameMethod_OldNameNotFound_ReturnsNewName()
+        public void RenameMethod_OldNameNotFound_ReturnsError()
         {
-            var result = this.refactorController.RenameMethod("Name", "NewName", null);
+            string code = "void AnotherMethod() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "OldName",
+                "NewName",
+                code
+            );
+
             Assert.AreEqual("Error: method name not found", result);
         }
 
@@ -112,9 +175,16 @@ namespace UnitTest
         /// Назва починається з цифри
         /// </summary>
         [TestMethod]
-        public void RenameMethod_StartsWithDigit_ReturnsNewName()
+        public void RenameMethod_StartsWithDigit_ReturnsError()
         {
-            var result = this.refactorController.RenameMethod("OldName", "1NewName", null);
+            string code = "void OldName() { }";
+
+            var result = this.refactorController.RenameMethod(
+                "OldName",
+                "1NewName",
+                code
+            );
+
             Assert.AreEqual("Error: starts with digit", result);
         }
     }
