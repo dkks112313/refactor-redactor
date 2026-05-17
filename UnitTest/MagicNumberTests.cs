@@ -11,7 +11,7 @@ namespace UnitTest.ConstTests
     [TestClass]
     public class MagicNumberTests
     {
-        private MagicNumberRefactoring refactoring = new MagicNumberRefactoring();
+        private MagicNumberRefactoringController refactoring = new MagicNumberRefactoringController();
 
         /// <summary>
         /// Verifies replacement of a single magic number with a constant.
