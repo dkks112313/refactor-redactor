@@ -1,4 +1,4 @@
-﻿using RefactoringApp;
+using RefactoringApp;
 using RefactoringApp;
 using RefactoringChange;
 using System;
@@ -102,6 +102,7 @@ namespace WindowsFormsApp6
                 new RefactorRenameMethodController(),
                 new RefactorRenameVariableController(),
                 new RefactorRemoveParameterController()
+                new MagicNumberRefactoring(),
             };
 
             refactorSelector.DataSource = refactorings;
