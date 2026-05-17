@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RefactoringTool
 {
-    public class MagicNumberRefactoring : RefactoringMethods
+    public class MagicNumberRefactoringController : RefactoringMethods
     {
         public string Name => "Magic Number Method";
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RefactoringApp;
-using RefactorApp;
 using RefactoringTool;
 using System;
 using System.Collections.Generic;
