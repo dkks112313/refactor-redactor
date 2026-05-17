@@ -53,7 +53,10 @@ namespace RefactoringChange
                 return sourceCode;
             }
 
-            if (!sourceCode.Contains(oldName))
+            // ФИКС: используем \b вместо Contains,
+            // чтобы не находить oldName внутри других слов
+            string checkPattern = $@"\b{Regex.Escape(oldName)}\b";
+            if (!Regex.IsMatch(sourceCode, checkPattern))
             {
                 return "Error: variable not found";
             }
@@ -64,19 +67,18 @@ namespace RefactoringChange
             string[] comments;
             sourceCode = ProtectComments(sourceCode, out comments);
 
-            string pattern =
-                $@"\b{Regex.Escape(oldName)}\b";
-
             sourceCode = Regex.Replace(
                 sourceCode,
-                pattern,
+                checkPattern,
                 newName
             );
 
+            // ФИКС: плейсхолдеры с __обёрткой__,
+            // чтобы не пересекаться с именами переменных
             for (int i = 0; i < comments.Length; i++)
             {
                 sourceCode = sourceCode.Replace(
-                    $"COMMENT{i}",
+                    $"__COMMENT{i}__",
                     comments[i]
                 );
             }
@@ -84,7 +86,7 @@ namespace RefactoringChange
             for (int i = 0; i < strings.Length; i++)
             {
                 sourceCode = sourceCode.Replace(
-                    $"STRING{i}",
+                    $"__STRING{i}__",
                     strings[i]
                 );
             }
@@ -106,11 +108,12 @@ namespace RefactoringChange
                 strings[i] = matches[i].Value;
             }
 
+            // ФИКС: плейсхолдер __STRING0__ вместо STRING0
             for (int i = 0; i < strings.Length; i++)
             {
                 code = code.Replace(
                     strings[i],
-                    $"STRING{i}"
+                    $"__STRING{i}__"
                 );
             }
 
@@ -131,11 +134,12 @@ namespace RefactoringChange
                 comments[i] = matches[i].Value;
             }
 
+            // ФИКС: плейсхолдер __COMMENT0__ вместо COMMENT0
             for (int i = 0; i < comments.Length; i++)
             {
                 code = code.Replace(
                     comments[i],
-                    $"COMMENT{i}"
+                    $"__COMMENT{i}__"
                 );
             }
 
