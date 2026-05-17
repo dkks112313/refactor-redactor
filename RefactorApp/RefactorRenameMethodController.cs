@@ -21,7 +21,31 @@ namespace RefactoringApp
 
         public string RenameMethod(string nameMethod, string newNameMethod, string code)
         {
-            if (string.IsNullOrWhiteSpace(nameMethod) || string.IsNullOrWhiteSpace(newNameMethod)) { return code; }
+            if (string.IsNullOrWhiteSpace(nameMethod) ||
+                string.IsNullOrWhiteSpace(newNameMethod))
+            {
+                return "Error: empty parameter";
+            }
+
+            if (newNameMethod.Contains(" "))
+            {
+                return "Error: spaces";
+            }
+
+            if (char.IsDigit(newNameMethod[0]))
+            {
+                return "Error: starts with digit";
+            }
+
+            if (!Regex.IsMatch(newNameMethod, @"^[a-zA-Z_][a-zA-Z0-9_]*$"))
+            {
+                return "Error: invalid characters";
+            }
+
+            if (string.IsNullOrEmpty(code))
+            {
+                code = nameMethod;
+            }
 
             var keywords = new HashSet<string>
             {
@@ -32,7 +56,15 @@ namespace RefactoringApp
                 "char", "bool", "namespace"
             };
 
-            if (keywords.Contains(nameMethod) ) { return code; }
+            if (keywords.Contains(nameMethod))
+            {
+                return code;
+            }
+
+            if (!code.Contains(nameMethod))
+            {
+                return "Error: method name not found";
+            }
 
             string escapedName = Regex.Escape(nameMethod);
 
