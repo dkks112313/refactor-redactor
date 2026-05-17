@@ -116,11 +116,11 @@ namespace UnitTest.ConstTests
         /// Verifies replacement of a magic number appearing in multiple lines of code.
         /// </summary>
         [TestMethod]
-        public void TestReplaceAMagicNumberInMultipleLinesOfCode()
+        public void TestReplaceMagicNumberAcrossMultipleLines()
         {
-            string input = "uint a = 2;\nint b = a * 2;";
-            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "2");
-            Assert.AreEqual("const int MAGIC_NUMBER = 2;\nuint a = MAGIC_NUMBER;\nint b = a * MAGIC_NUMBER;", result);
+            string input = "int limit = 42;\nif (x > 42)";
+            string result = refactoring.ReplaceMagicNumber(input, "MAGIC_NUMBER", "42");
+            Assert.AreEqual("const int MAGIC_NUMBER = 42;\nint limit = MAGIC_NUMBER;\nif (x > MAGIC_NUMBER)", result);
         }
     }
 }
