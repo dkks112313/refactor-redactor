@@ -1,4 +1,6 @@
-﻿using RefactoringApp;
+using RefactoringApp;
+using RefactoringApp;
+using RefactoringTool;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,8 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using RefactoringApp;
 namespace WindowsFormsApp6
 {
     public partial class RefactorForm : Form
@@ -99,7 +99,8 @@ namespace WindowsFormsApp6
 
             refactorings = new List<RefactoringMethods>
             {
-                new RefactorRenameMethodController()
+                new RefactorRenameMethodController(),
+                new MagicNumberRefactoring(),
             };
 
             refactorSelector.DataSource = refactorings;
