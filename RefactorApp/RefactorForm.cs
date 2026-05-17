@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using RefactoringApp;
-
 namespace WindowsFormsApp6
 {
     public partial class RefactorForm : Form
