@@ -23,13 +23,36 @@ namespace RefactoringApp
         {
             if (string.IsNullOrWhiteSpace(nameMethod) || string.IsNullOrWhiteSpace(newNameMethod)) { return code; }
 
-            string patternForCall = $@"\b{nameMethod}\s*\(";
-            code = Regex.Replace(code, patternForCall, newNameMethod + "(", RegexOptions.Multiline);
+            var keywords = new HashSet<string>
+            {
+                "if", "else", "for", "while", "switch",
+                "case", "return", "class", "struct",
+                "public", "private", "protected",
+                "void", "int", "float", "double",
+                "char", "bool", "namespace"
+            };
 
-            string patternForAdvert = $@"\b(\w+\s+)+{nameMethod}\s*\(";
-            code = Regex.Replace(code, patternForAdvert,
-                match => match.Value.Replace(nameMethod, newNameMethod),
-                RegexOptions.Multiline);
+            if (keywords.Contains(nameMethod) ) { return code; }
+
+            string escapedName = Regex.Escape(nameMethod);
+
+            string patternForDeclaration =
+            $@"(?<=\b(?:void|int|float|double|string|bool|char)\s+){escapedName}(?=\s*\()";
+
+            code = Regex.Replace(
+                code,
+                patternForDeclaration,
+                newNameMethod
+            );
+
+            string patternForCall =
+            $@"(?<!\b(if|for|while|switch)\s*)\b{escapedName}(?=\s*\()";
+
+            code = Regex.Replace(
+                code,
+                patternForCall,
+                newNameMethod
+            );
 
             return code;
         }

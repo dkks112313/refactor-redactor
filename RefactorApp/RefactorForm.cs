@@ -20,6 +20,7 @@ namespace WindowsFormsApp6
         private ComboBox refactorSelector;
         private Panel paramsPanel;
         private Button runButton;
+        private Button exitButton;
 
         private List<RefactoringMethods> refactorings;
 
@@ -71,7 +72,7 @@ namespace WindowsFormsApp6
             runButton = new Button
             {
                 Text = "Run",
-                Left = 750,
+                Left = 650,
                 Top = 490,
                 Width = 120,
                 Height = 40
@@ -79,9 +80,21 @@ namespace WindowsFormsApp6
 
             runButton.Click += RunClicked;
 
+            exitButton = new Button
+            {
+                Text = "Exit",
+                Left = 800,
+                Top = 490,
+                Width = 50,
+                Height = 40
+            };
+
+            exitButton.Click += ExitClicked;
+
             this.Controls.Add(inputCode);
             this.Controls.Add(outputCode);
             this.Controls.Add(runButton);
+            this.Controls.Add(exitButton);
             this.Controls.Add(refactorSelector);
             this.Controls.Add(paramsPanel);
 
@@ -142,6 +155,11 @@ namespace WindowsFormsApp6
 
             string results = selected.Execute(inputCode.Text, parameters);
             outputCode.Text = results;
+        }
+
+        private void ExitClicked(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
