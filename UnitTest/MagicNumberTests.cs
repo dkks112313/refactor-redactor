@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTest.ConstTests
+namespace UnitTest
 {
     [TestClass]
     public class MagicNumberTests
