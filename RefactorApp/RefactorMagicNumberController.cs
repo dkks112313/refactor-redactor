@@ -33,8 +33,8 @@ namespace RefactoringTool
             string constantDeclaration = $"const {type} {nameOfConstant} = {number};";
 
             string escapedNumber = Regex.Escape(number);
-            string pattern = $@"(?<![.\d]){escapedNumber}(?![.\d])";
-            string replacedCode = Regex.Replace(sourceCode, pattern, nameOfConstant);
+            string numberPattern = $@"(?<![.\d]){escapedNumber}(?![.\d])";
+            string replacedCode = ReplaceOutsideCommentsAndStrings(sourceCode, numberPattern, nameOfConstant);
 
             var lastIncludeMatch = Regex.Match(replacedCode, @"(#include\s*[<""][^\n]*\n)(?!.*#include)", RegexOptions.Singleline);
             if (lastIncludeMatch.Success)
@@ -48,6 +48,33 @@ namespace RefactoringTool
             }
 
             return replacedCode;
+        }
+
+        private string ReplaceOutsideCommentsAndStrings(string source, string pattern, string replacement)
+        {
+            string tokenizerPattern =
+                @"(/\*.*?\*/)" +
+                @"|(//[^\n]*)" +
+                @"|(""(?:[^""\\]|\\.)*"")" +
+                @"|('(?:[^'\\]|\\.)*')" +
+                @"|([^/""']+|.)";
+
+            var sb = new StringBuilder(source.Length);
+
+            foreach (Match tok in Regex.Matches(source, tokenizerPattern, RegexOptions.Singleline))
+            {
+                if (tok.Groups[1].Success || tok.Groups[2].Success ||
+                    tok.Groups[3].Success || tok.Groups[4].Success)
+                {
+                    sb.Append(tok.Value);
+                }
+                else
+                {
+                    sb.Append(Regex.Replace(tok.Value, pattern, replacement));
+                }
+            }
+
+            return sb.ToString();
         }
 
         private string ExtractTypeFromCode(string sourceCode, string number)
