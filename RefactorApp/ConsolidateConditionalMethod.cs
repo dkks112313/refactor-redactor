@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace RefactoringEditor.Core.Methods
+namespace RefactoringApp
 {
     public class ConsolidateConditionalMethod : IRefactoringMethod
     {

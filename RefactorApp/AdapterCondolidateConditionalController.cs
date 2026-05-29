@@ -1,5 +1,4 @@
 using RefactoringApp;
-using RefactoringEditor.Core.Methods;
 using System;
 using System.Collections.Generic;
 using System.Linq;

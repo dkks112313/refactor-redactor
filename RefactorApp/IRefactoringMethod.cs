@@ -1,6 +1,6 @@
 using System;
 
-namespace RefactoringEditor.Core
+namespace RefactoringApp
 {
     public interface IRefactoringMethod
     {
