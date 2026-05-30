@@ -58,7 +58,7 @@ namespace RefactoringChange
             string checkPattern = $@"\b{Regex.Escape(oldName)}\b";
             if (!Regex.IsMatch(sourceCode, checkPattern))
             {
-                return "Error: variable not found";
+                return sourceCode;
             }
 
             string[] strings;
