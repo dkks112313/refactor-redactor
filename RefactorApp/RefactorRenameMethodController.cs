@@ -15,8 +15,8 @@ namespace RefactoringApp
 
         public List<RefactorParameter> GetParameters() => new List<RefactorParameter>()
         {
-            new RefactorParameter {Name = "OLd", Value = "oldName"},
-            new RefactorParameter {Name = "New", Value = "newName"}
+            new RefactorParameter {Name = "Old Name", Value = "oldName"},
+            new RefactorParameter {Name = "New Name", Value = "newName"}
         };
 
         public string RenameMethod(string nameMethod, string newNameMethod, string code)

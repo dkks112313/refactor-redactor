@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsolidateConditionalMethod.cs" />
+    <Compile Include="AdapterCondolidateConditionalController.cs" />
+    <Compile Include="IRefactoringMethod.cs" />
     <Compile Include="RefactorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,7 +61,7 @@
     <Compile Include="RefactorMagicNumberController.cs" />
     <Compile Include="RefactorRemoveParameterController.cs" />
     <Compile Include="RefactorRenameMethodController.cs" />
-	<Compile Include="RefactorRenamingChangeController.cs" />
+    <Compile Include="RefactorRenamingChangeController.cs" />
     <Compile Include="RefacrorParameter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
