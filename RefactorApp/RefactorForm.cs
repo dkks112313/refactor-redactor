@@ -1,15 +1,8 @@
 ﻿using RefactoringApp;
-using RefactoringApp;
 using RefactoringChange;
 using RefactoringTool;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace WindowsFormsApp6
 {
@@ -21,6 +14,9 @@ namespace WindowsFormsApp6
         private Panel paramsPanel;
         private Button runButton;
         private Button exitButton;
+        private Label historyLabel;
+        private Button backButton;
+        private Button forwardButton;
 
         private List<RefactoringMethods> refactorings;
 
@@ -30,15 +26,17 @@ namespace WindowsFormsApp6
         public RefactorForm()
         {
             this.Text = "Refactoring Tool";
-            this.Width = 900;
-            this.Height = 600;
+            this.Width = 1024;
+            this.Height = 768;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
             inputCode = new TextBox
             {
                 Multiline = true,
-                Width = 600,
-                Height = 250,
-                Left = 10,
+                Width = 350,
+                Height = 700,
+                Left = 290,
                 Top = 10,
                 ScrollBars = ScrollBars.Vertical
             };
@@ -46,18 +44,18 @@ namespace WindowsFormsApp6
             outputCode = new TextBox
             {
                 Multiline = true,
-                Width = 600,
-                Height = 250,
-                Left = 10,
-                Top = 270,
+                Width = 350,
+                Height = 700,
+                Left = 650,
+                Top = 10,
                 ScrollBars = ScrollBars.Vertical
             };
 
             refactorSelector = new ComboBox
             {
-                Left = 650,
-                Top = 10,
-                Width = 200,
+                Left = 20,
+                Top = 30,
+                Width = 250,
                 DropDownStyle = ComboBoxStyle.DropDownList,
             };
 
@@ -65,18 +63,18 @@ namespace WindowsFormsApp6
 
             paramsPanel = new Panel
             {
-                Left = 650,
-                Top = 270,
-                Width = 200,
-                Height = 200,
+                Left = 20,
+                Top = 150,
+                Width = 250,
+                Height = 150,
                 BorderStyle = BorderStyle.FixedSingle,
             };
 
             runButton = new Button
             {
                 Text = "Run",
-                Left = 650,
-                Top = 490,
+                Left = 150,
+                Top = 330,
                 Width = 120,
                 Height = 40
             };
@@ -86,13 +84,43 @@ namespace WindowsFormsApp6
             exitButton = new Button
             {
                 Text = "Exit",
-                Left = 800,
-                Top = 490,
+                Left = 20,
+                Top = 330,
                 Width = 50,
                 Height = 40
             };
 
             exitButton.Click += ExitClicked;
+
+            historyLabel = new Label
+            {
+                Text = "History",
+                Left = 20,
+                Top = 380,
+                Width = 150,
+                Height = 20
+            };
+
+            backButton = new Button
+            {
+                Text = "<-",
+                Left = 20,
+                Top = 410,
+                Width = 50,
+                Height = 40
+            };
+
+            forwardButton = new Button
+            {
+                Text = "->",
+                Left = 80,
+                Top = 410,
+                Width = 50,
+                Height = 40
+            };
+
+            backButton.Click += (s, e) => GoBack();
+            forwardButton.Click += (s, e) => GoForward();
 
             this.Controls.Add(inputCode);
             this.Controls.Add(outputCode);
@@ -100,6 +128,9 @@ namespace WindowsFormsApp6
             this.Controls.Add(exitButton);
             this.Controls.Add(refactorSelector);
             this.Controls.Add(paramsPanel);
+            this.Controls.Add(historyLabel);
+            this.Controls.Add(forwardButton);
+            this.Controls.Add(backButton);
 
             refactorings = new List<RefactoringMethods>
             {
@@ -151,9 +182,9 @@ namespace WindowsFormsApp6
             var selected = (RefactoringMethods)refactorSelector.SelectedItem;
             var parameters = new Dictionary<string, string>();
 
-            foreach(Control c in paramsPanel.Controls)
+            foreach (Control c in paramsPanel.Controls)
             {
-                if(c is TextBox tb && tb.Tag != null)
+                if (c is TextBox tb && tb.Tag != null)
                 {
                     parameters[tb.Tag.ToString()] = tb.Text;
                 }
