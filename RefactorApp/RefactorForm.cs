@@ -1,15 +1,8 @@
-using RefactoringApp;
-using RefactoringApp;
+﻿using RefactoringApp;
 using RefactoringChange;
 using RefactoringTool;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace WindowsFormsApp6
 {
@@ -26,6 +19,9 @@ namespace WindowsFormsApp6
         private Button forwardButton;
 
         private List<RefactoringMethods> refactorings;
+
+        private List<string> history = new List<string>();
+        private int currentIndex = -1;
 
         public RefactorForm()
         {
@@ -123,8 +119,8 @@ namespace WindowsFormsApp6
                 Height = 40
             };
 
-            //backButton.Click += (s, e) => GoBack();
-            //forwardButton.Click += (s, e) => GoForward();
+            backButton.Click += (s, e) => GoBack();
+            forwardButton.Click += (s, e) => GoForward();
 
             this.Controls.Add(inputCode);
             this.Controls.Add(outputCode);
@@ -158,7 +154,7 @@ namespace WindowsFormsApp6
 
             int top = 10;
 
-            foreach (var param in parameters) 
+            foreach (var param in parameters)
             {
                 Label label = new Label
                 {
@@ -187,9 +183,9 @@ namespace WindowsFormsApp6
             var selected = (RefactoringMethods)refactorSelector.SelectedItem;
             var parameters = new Dictionary<string, string>();
 
-            foreach(Control c in paramsPanel.Controls)
+            foreach (Control c in paramsPanel.Controls)
             {
-                if(c is TextBox tb && tb.Tag != null)
+                if (c is TextBox tb && tb.Tag != null)
                 {
                     parameters[tb.Tag.ToString()] = tb.Text;
                 }
@@ -197,6 +193,8 @@ namespace WindowsFormsApp6
 
             string results = selected.Execute(inputCode.Text, parameters);
             outputCode.Text = results;
+
+            SaveToHistory(inputCode.Text);
         }
 
         private void ExitClicked(object sender, EventArgs e)
@@ -204,9 +202,61 @@ namespace WindowsFormsApp6
             Application.Exit();
         }
 
-        private void HistorySelected(object sender, EventArgs e)
+        /// <summary>
+        /// Метод для збереження поточного коду в історії.
+        /// </summary>
+        /// <param name="code">Код для збереження.</param>
+        private void SaveToHistory(string code)
         {
-            
+            // Якщо список порожній, додати код і встановить поточний індекс на 0.
+            if (history.Count == 0)
+            {
+                history.Add(code);
+                currentIndex = 0;
+                return;
+            }
+
+            // Якщо поточний код збігається з останнім у історії, не додавати його знову.
+            if (history[currentIndex] == code)
+                return;
+
+            // Якщо не досягнуто кінця історії, видалити всі записи, що йдуть за поточним індексом
+            if (currentIndex < history.Count - 1)
+            {
+                history.RemoveRange(currentIndex + 1, history.Count - currentIndex - 1);
+            }
+
+            // Додати новий код до історії та оновити поточний індекс.
+            history.Add(code);
+            currentIndex = history.Count - 1;
+        }
+
+        /// <summary>
+        /// Метод для переходу назад в історії.
+        /// </summary>
+        private void GoBack()
+        {
+            if (currentIndex > 0)
+            {
+                currentIndex--;
+                inputCode.Text = history[currentIndex];
+
+                outputCode.Text = "";
+            }
+        }
+
+        /// <summary>
+        /// Метод для переходу вперед в історії.
+        /// </summary>
+        private void GoForward()
+        {
+            if (currentIndex < history.Count - 1)
+            {
+                currentIndex++;
+                inputCode.Text = history[currentIndex];
+
+                outputCode.Text = "";
+            }
         }
     }
 }
